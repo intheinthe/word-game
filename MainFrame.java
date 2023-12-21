@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainFrame extends JFrame {
     final private Font mainFont = new Font("Segoe print", Font.BOLD, 18);
@@ -11,6 +12,15 @@ public class MainFrame extends JFrame {
     private static ArrayList<String> words = new ArrayList<String>();
     private static String nextWord = new String("");
     int scoreInt = 0;
+    // String randLet;
+    // Create a Random object
+    Random random = new Random();
+
+    // ASCII values for uppercase letters 'A' to 'Z'
+    int asciiA = (int) 'A';
+    int asciiZ = (int) 'Z';
+
+    char randLet;
 
     public static ArrayList<String> getWords(){
         return words;
@@ -72,33 +82,57 @@ public class MainFrame extends JFrame {
                 // TODO Auto-generated method stub
                 nextWord = tfNextWord.getText().toLowerCase();
                 int x = 0;
-                for(int j=0; j<words.size(); j++){
-                    if(nextWord.equals(words.get(j).toLowerCase())){
-                        j=words.size();
-                        guide.setText("Word is already in list.");
-                        x++;
-                    } 
-                } if(x==0){
-                    words.add(nextWord);
-                    textArea.append(nextWord + "\n");
-                    //score function
-                    if(nextWord.length()<=4 && nextWord.length()>0){
-                        scoreInt+=20;
-                        score.setText("Score: " + Integer.toString(scoreInt));
-                    } else if(nextWord.length()>4 && nextWord.length()<=6){
-                        scoreInt+=40;
-                        score.setText("Score: " + Integer.toString(scoreInt));
-                    } else if(nextWord.length()>6 && nextWord.length()<=8){
-                        scoreInt+=60;
-                        score.setText("Score: " + Integer.toString(scoreInt));
-                    } else if(nextWord.length()>8){
-                        scoreInt+=100;
-                        score.setText("Score: " + Integer.toString(scoreInt));
-                    }
+                if(nextWord.charAt(0)==randLet+32){
+                    for(int j=0; j<words.size(); j++){
+                        if(nextWord.equals(words.get(j).toLowerCase())){
+                            j=words.size();
+                            guide.setText("Word is already in list.");
+                            x++;
+                        } 
+                    } if(x==0){
+                        words.add(nextWord);
+                        textArea.append(nextWord + "\n");
+                        //score function
+                        if(nextWord.length()<=4 && nextWord.length()>0){
+                            scoreInt+=20;
+                            score.setText("Score: " + Integer.toString(scoreInt));
+                        } else if(nextWord.length()>4 && nextWord.length()<=6){
+                            scoreInt+=40;
+                            score.setText("Score: " + Integer.toString(scoreInt));
+                        } else if(nextWord.length()>6 && nextWord.length()<=8){
+                            scoreInt+=60;
+                            score.setText("Score: " + Integer.toString(scoreInt));
+                        } else if(nextWord.length()>8){
+                            scoreInt+=100;
+                            score.setText("Score: " + Integer.toString(scoreInt));
+                        }
 
-                    guide.setText("");
+                        guide.setText("");
+                    }
+                    tfNextWord.setText("");
+                } else{
+                    guide.setText("Word does not start with " + String.valueOf(randLet));
                 }
-                tfNextWord.setText("");
+            }
+        });
+
+        JLabel letter = new JLabel();
+
+        JButton btnRandomize = new JButton("Generate Letter");
+        btnRandomize.setFont(mainFont);
+        btnRandomize.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) { 
+                // TODO Auto-generated method stub
+                
+                // Generate a random ASCII value within the range of uppercase letters
+                int randomAscii = random.nextInt(asciiZ - asciiA + 1) + asciiA;
+
+                // Convert the random ASCII value to a character
+                char randomLetter = (char) randomAscii;
+
+                letter.setText(String.valueOf(randomLetter));
+                randLet = randomLetter;
             }
         });
 
@@ -106,6 +140,8 @@ public class MainFrame extends JFrame {
         buttonsPanel.setLayout(new GridLayout(1, 2, 5, 5));
         buttonsPanel.setOpaque(false);
         buttonsPanel.add(btnSubmit);
+        buttonsPanel.add(btnRandomize);
+        buttonsPanel.add(letter);
 
         //***MAIN PANEL***
         JPanel mainPanel = new JPanel();
@@ -135,7 +171,6 @@ public class MainFrame extends JFrame {
         MainFrame myFrame = new MainFrame();
         myFrame.initialize();
     }
-
 
 
 
