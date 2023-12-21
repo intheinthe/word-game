@@ -8,7 +8,7 @@ The scoring system is awarded based on number of letters in a submitted word:
 - (0, 4] = 20 pts
 - (4, 6] = 40 pts
 - (6, 8] = 60 pts
-- > 8 = 100 pts
+- (8, inf) = 100 pts
 
 The aim of the game is for the user to input as many real words as they can think of given a randomized letter that all the words must start with.
 
