@@ -15,5 +15,4 @@ The aim of the game is for the user to input as many real words as they can thin
 
 
 future functions:
-Increased difficulty - 10 sec timer
-Spellcheck
+Increased difficulty - 10 sec timer, Spellcheck
